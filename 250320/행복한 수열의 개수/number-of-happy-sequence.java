@@ -19,56 +19,30 @@ public class Main {
         }
 
         for(int i = 0; i < n; i++) {
-            findHappyNumList(i);
+            findHappyNumList(i, true);
+            findHappyNumList(i, false);
         }
 
         System.out.println(numListCnt);
     }
 
-    public static void findHappyNumList(int x) {
+    public static void findHappyNumList(int x, boolean isRow) {
         int cnt = 1;
-        // 행
-        int prev = grid[x][0];
-        for(int i = 1; i < n; i++) {
-            if(cnt == m) {
-                numListCnt++;
-                break;
-            }
-            if(grid[x][i] == prev) {
-                cnt++;
-                
-                if(cnt == m) {
-                    numListCnt++;
-                    break;
-                }
+        int prev = isRow ? grid[x][0] : grid[0][x];
 
+        for (int i = 1; i < n; i++) {
+            int current = isRow ? grid[x][i] : grid[i][x];
+
+            if (current == prev) {
+                cnt++;
             } else {
                 cnt = 1;
-                prev = grid[x][i];
+                prev = current;
             }
-        }
 
-        // 열
-        prev = grid[0][x];
-        cnt = 1;
-
-        for(int i = 1; i < n; i++) {
-            if(cnt == m) {
+            if (cnt == m) {
                 numListCnt++;
                 break;
-            }
-
-            if(grid[i][x] == prev) {
-                cnt++;
-                
-                if(cnt == m) {
-                    numListCnt++;
-                    break;
-                }
-
-            } else {
-                cnt = 1;
-                prev = grid[i][x];
             }
         }
     }
